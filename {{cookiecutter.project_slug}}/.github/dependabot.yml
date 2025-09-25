@@ -14,8 +14,6 @@ updates:
         patterns:
           - '*'
 
-{%- if cookiecutter.use_docker == 'y' %}
-
   # Enable version updates for Docker
   - package-ecosystem: 'docker'
     # Look for a `Dockerfile` in the `compose/local/django` directory
@@ -51,8 +49,6 @@ updates:
     # Every weekday
     schedule:
       interval: 'daily'
-
-{%- endif %}
 
   # Enable version updates for Python/Pip - Production
   - package-ecosystem: 'pip'

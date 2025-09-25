@@ -48,11 +48,6 @@ def context():
 SUPPORTED_COMBINATIONS = [
     {"username_type": "username"},
     {"username_type": "email"},
-    {"open_source_license": "MIT"},
-    {"open_source_license": "BSD"},
-    {"open_source_license": "GPLv3"},
-    {"open_source_license": "Apache Software License 2.0"},
-    {"open_source_license": "Not open source"},
     {"windows": "y"},
     {"windows": "n"},
     {"editor": "None"},
@@ -118,17 +113,12 @@ SUPPORTED_COMBINATIONS = [
     {"use_celery": "n"},
     {"use_mailpit": "y"},
     {"use_mailpit": "n"},
-    {"use_sentry": "y"},
-    {"use_sentry": "n"},
     {"use_whitenoise": "y"},
     {"use_whitenoise": "n"},
-    {"use_heroku": "y"},
-    {"use_heroku": "n"},
     {"ci_tool": "None"},
     {"ci_tool": "Travis"},
     {"ci_tool": "Gitlab"},
     {"ci_tool": "Github"},
-    {"ci_tool": "Drone"},
     {"keep_local_envs_in_vcs": "y"},
     {"keep_local_envs_in_vcs": "n"},
     {"debug": "y"},
@@ -433,15 +423,3 @@ def test_pyproject_toml(cookies, context):
     assert data["project"]["authors"][0]["email"] == author_email
     assert data["project"]["authors"][0]["name"] == author_name
     assert data["project"]["name"] == context["project_slug"]
-
-
-def test_pre_commit_without_heroku(cookies, context):
-    context.update({"use_heroku": "n"})
-    result = cookies.bake(extra_context=context)
-    assert result.exit_code == 0
-
-    pre_commit_config = result.project_path / ".pre-commit-config.yaml"
-
-    data = pre_commit_config.read_text()
-
-    assert "uv-pre-commit" not in data

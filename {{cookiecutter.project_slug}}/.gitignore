@@ -59,10 +59,8 @@ docs/_build/
 # PyBuilder
 target/
 
-{% if cookiecutter.use_celery == 'y' -%}
 # celery beat schedule file
 celerybeat-schedule
-{%- endif %}
 
 # Environments
 .venv
@@ -161,7 +159,6 @@ typings/
 # Local History for devcontainer
 .devcontainer/bash_history
 
-{% if cookiecutter.editor == 'PyCharm' -%}
 # Provided default Pycharm Run/Debug Configurations should be tracked by git
 # In case of local modifications made by Pycharm, use update-index command
 # for each changed file, like this:
@@ -216,14 +213,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-{% endif %}
-
-
-### Windows template
-# Windows thumbnail cache files
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
 
 # Dump file
 *.stackdump
@@ -233,16 +222,6 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
 
 ### macOS template
 # General
@@ -326,16 +305,14 @@ tags
 dump.rdb
 
 ### Project template
-{%- if cookiecutter.use_mailpit == 'y' and cookiecutter.use_docker == 'n' %}
+{%- if cookiecutter.use_mailpit == 'y'%}
 mailpit
 {%- endif %}
 {{ cookiecutter.project_slug }}/media/
 
 .pytest_cache/
 
-{%- if cookiecutter.use_docker == 'y' %}
 .ipython/
-{%- endif %}
 
 {%- if cookiecutter.frontend_pipeline == 'Gulp' %}
 project.css

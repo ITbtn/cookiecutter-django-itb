@@ -24,69 +24,13 @@ SUCCESS = "\x1b[1;32m [SUCCESS]: "
 DEBUG_VALUE = "debug"
 
 
-def remove_open_source_files():
-    file_names = ["CONTRIBUTORS.txt", "LICENSE"]
-    for file_name in file_names:
-        Path(file_name).unlink()
-
-
-def remove_gplv3_files():
-    file_names = ["COPYING"]
-    for file_name in file_names:
-        Path(file_name).unlink()
-
-
 def remove_custom_user_manager_files():
     users_path = Path("{{cookiecutter.project_slug}}", "users")
     (users_path / "managers.py").unlink()
     (users_path / "tests" / "test_managers.py").unlink()
 
-
-def remove_pycharm_files():
-    idea_dir_path = Path(".idea")
-    if idea_dir_path.exists():
-        shutil.rmtree(idea_dir_path)
-
-    docs_dir_path = Path("docs", "pycharm")
-    if docs_dir_path.exists():
-        shutil.rmtree(docs_dir_path)
-
-
-def remove_docker_files():
-    shutil.rmtree(".devcontainer")
-    shutil.rmtree("compose")
-
-    file_names = [
-        "docker-compose.local.yml",
-        "docker-compose.production.yml",
-        ".dockerignore",
-        "justfile",
-    ]
-    for file_name in file_names:
-        Path(file_name).unlink()
-    if "{{ cookiecutter.editor }}" == "PyCharm":
-        file_names = ["docker_compose_up_django.xml", "docker_compose_up_docs.xml"]
-        for file_name in file_names:
-            Path(".idea", "runConfigurations", file_name).unlink()
-
-
 def remove_nginx_docker_files():
     shutil.rmtree(Path("compose", "production", "nginx"))
-
-
-def remove_utility_files():
-    shutil.rmtree("utility")
-
-
-def remove_heroku_files():
-    file_names = ["Procfile"]
-    for file_name in file_names:
-        if file_name == "requirements.txt" and "{{ cookiecutter.ci_tool }}".lower() == "travis":
-            # Don't remove the file if we are using Travis CI but not using Heroku
-            continue
-        Path(file_name).unlink()
-    shutil.rmtree("bin")
-
 
 def remove_sass_files():
     shutil.rmtree(Path("{{cookiecutter.project_slug}}", "static", "sass"))
@@ -246,10 +190,6 @@ def remove_dotgitlabciyml_file():
 
 def remove_dotgithub_folder():
     shutil.rmtree(".github")
-
-
-def remove_dotdrone_file():
-    Path(".drone.yml").unlink()
 
 
 def generate_random_string(length, using_digits=False, using_ascii_letters=False, using_punctuation=False):  # noqa: FBT002
@@ -422,43 +362,21 @@ def main():  # noqa: C901, PLR0912, PLR0915
     )
     set_flags_in_settings_files()
 
-    if "{{ cookiecutter.open_source_license }}" == "Not open source":
-        remove_open_source_files()
-    if "{{ cookiecutter.open_source_license}}" != "GPLv3":
-        remove_gplv3_files()
-
     if "{{ cookiecutter.username_type }}" == "username":
         remove_custom_user_manager_files()
 
-    if "{{ cookiecutter.editor }}" != "PyCharm":
-        remove_pycharm_files()
+    if "{{ cookiecutter.cloud_provider }}".lower() != "none":
+        remove_nginx_docker_files()
 
-    if "{{ cookiecutter.use_docker }}".lower() == "y":
-        remove_utility_files()
-        if "{{ cookiecutter.cloud_provider }}".lower() != "none":
-            remove_nginx_docker_files()
-    else:
-        remove_docker_files()
-
-    if "{{ cookiecutter.use_docker }}".lower() == "y" and "{{ cookiecutter.cloud_provider}}" != "AWS":
+    if "{{ cookiecutter.cloud_provider}}" != "AWS":
         remove_aws_dockerfile()
 
-    if "{{ cookiecutter.use_heroku }}".lower() == "n":
-        remove_heroku_files()
-
-    if "{{ cookiecutter.use_docker }}".lower() == "n" and "{{ cookiecutter.use_heroku }}".lower() == "n":
-        if "{{ cookiecutter.keep_local_envs_in_vcs }}".lower() == "y":
-            print(
-                INFO + ".env(s) are only utilized when Docker Compose and/or "
-                "Heroku support is enabled so keeping them does not make sense "
-                "given your current setup." + TERMINATOR,
-            )
+    if "{{ cookiecutter.keep_local_envs_in_vcs }}".lower() == "n":
         remove_envs_and_associated_files()
-    else:
         append_to_gitignore_file(".env")
         append_to_gitignore_file(".envs/*")
-        if "{{ cookiecutter.keep_local_envs_in_vcs }}".lower() == "y":
-            append_to_gitignore_file("!.envs/.local/")
+    elif "{{ cookiecutter.keep_local_envs_in_vcs }}".lower() == "y":
+        append_to_gitignore_file("!.envs/.local/")
 
     if "{{ cookiecutter.frontend_pipeline }}" in ["None", "Django Compressor"]:
         remove_gulp_files()
@@ -495,9 +413,6 @@ def main():  # noqa: C901, PLR0912, PLR0915
 
     if "{{ cookiecutter.ci_tool }}" != "Github":
         remove_dotgithub_folder()
-
-    if "{{ cookiecutter.ci_tool }}" != "Drone":
-        remove_dotdrone_file()
 
     if "{{ cookiecutter.use_drf }}".lower() == "n":
         remove_drf_starter_files()

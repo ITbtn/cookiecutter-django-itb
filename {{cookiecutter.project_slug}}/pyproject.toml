@@ -143,9 +143,5 @@ version = "{{ cookiecutter.version }}"
 description = "{{ cookiecutter.description }}"
 readme = "README.md"
 
-license = { text = "{{ cookiecutter.open_source_license }}" }
-authors = [
-  { name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.email }}" },
-]
 requires-python = "==3.13.*"
 dependencies = []

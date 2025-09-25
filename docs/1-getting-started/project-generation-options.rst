@@ -18,12 +18,6 @@ project_slug:
 description:
     Describes your project and gets used in places like ``README.rst`` and such.
 
-author_name:
-    This is you! The value goes into places like ``LICENSE`` and such.
-
-email:
-    The email address you want to identify yourself in the project.
-
 username_type:
     The type of username you want to use in the project. This can be either
     ``username`` or ``email``. If you choose ``username``, the ``email`` field
@@ -35,30 +29,8 @@ domain_name:
     The domain name you plan to use for your project once it goes live.
     Note that it can be safely changed later on whenever you need to.
 
-version:
-    The version of the project at its inception.
-
-open_source_license:
-    A software license for the project. The choices are:
-
-    1. MIT_
-    2. BSD_
-    3. GPLv3_
-    4. `Apache Software License 2.0`_
-    5. Not open source
-
 timezone:
     The value to be used for the ``TIME_ZONE`` setting of the project.
-
-windows:
-    Indicates whether the project should be configured for development on Windows.
-
-editor:
-    Select an editor to use. The choices are:
-
-    1. None
-    2. PyCharm_
-    3. `VS Code`_
 
 use_docker:
     Indicates whether the project should be configured to use Docker_, `Docker Compose`_ and `devcontainer`_.
@@ -116,15 +88,8 @@ use_celery:
 use_mailpit:
     Indicates whether the project should be configured to use Mailpit_.
 
-use_sentry:
-    Indicates whether the project should be configured to use Sentry_.
-
 use_whitenoise:
     Indicates whether the project should be configured to use WhiteNoise_.
-
-use_heroku:
-    Indicates whether the project should be configured so as to be deployable
-    to Heroku_.
 
 ci_tool:
     Select a CI tool for running tests. The choices are:
@@ -133,13 +98,12 @@ ci_tool:
     2. `Travis CI`_
     3. `Gitlab CI`_
     4. `Github Actions`_
-    5. `Drone CI`_
 
 keep_local_envs_in_vcs:
     Indicates whether the project's ``.envs/.local/`` should be kept in VCS
     (comes in handy when working in teams where local environment reproducibility
     is strongly encouraged).
-    Note: .env(s) are only utilized when Docker Compose and/or Heroku support is enabled.
+    Note: .env(s) are only utilized when Docker Compose is enabled.
 
 debug:
     Indicates whether the project should be configured for debugging.
