@@ -30,14 +30,9 @@ CACHES = {
 
 # EMAIL
 # ------------------------------------------------------------------------------
-{% if cookiecutter.use_mailpit == 'y' and cookiecutter.use_docker == 'y' -%}
+{% if cookiecutter.use_mailpit == 'y' -%}
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-host
 EMAIL_HOST = env("EMAIL_HOST", default="mailpit")
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-EMAIL_PORT = 1025
-{%- elif cookiecutter.use_mailpit == 'y' and cookiecutter.use_docker == 'n' -%}
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-host
-EMAIL_HOST = "localhost"
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-port
 EMAIL_PORT = 1025
 {%- else -%}
@@ -73,7 +68,6 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#internal-ips
 INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
-{% if cookiecutter.use_docker == 'y' -%}
 if env("USE_DOCKER") == "yes":
     import socket
 
@@ -87,33 +81,17 @@ if env("USE_DOCKER") == "yes":
         # The node container isn't started (yet?)
         pass
     {%- endif %}
-    {%- if cookiecutter.windows == 'y' %}
-    # RunServerPlus
-    # ------------------------------------------------------------------------------
-    # This is a custom setting for RunServerPlus to fix reloader issue in Windows docker environment
-    # Werkzeug reloader type [auto, watchdog, or stat]
-    RUNSERVERPLUS_POLLER_RELOADER_TYPE = 'stat'
-    # If you have CPU and IO load issues, you can increase this poller interval e.g) 5
-    RUNSERVERPLUS_POLLER_RELOADER_INTERVAL = 1
-    {%- endif %}
-{%- endif %}
 
 # django-extensions
 # ------------------------------------------------------------------------------
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
 INSTALLED_APPS += ["django_extensions"]
-{% if cookiecutter.use_celery == 'y' -%}
 
 # Celery
 # ------------------------------------------------------------------------------
-{% if cookiecutter.use_docker == 'n' -%}
-# https://docs.celeryq.dev/en/stable/userguide/configuration.html#task-always-eager
-CELERY_TASK_ALWAYS_EAGER = True
-{%- endif %}
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#task-eager-propagates
 CELERY_TASK_EAGER_PROPAGATES = True
 
-{%- endif %}
 {%- if cookiecutter.frontend_pipeline == 'Webpack' %}
 # django-webpack-loader
 # ------------------------------------------------------------------------------

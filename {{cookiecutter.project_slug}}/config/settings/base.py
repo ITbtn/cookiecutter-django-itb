@@ -25,7 +25,6 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
-# In Windows, this must be set to your system time zone.
 TIME_ZONE = "{{ cookiecutter.timezone }}"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "en-us"
@@ -48,16 +47,8 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-{% if cookiecutter.use_docker == "y" -%}
 DATABASES = {"default": env.db("DATABASE_URL")}
-{%- else %}
-DATABASES = {
-    "default": env.db(
-        "DATABASE_URL",
-        default="postgres://{% if cookiecutter.windows == 'y' %}localhost{% endif %}/{{cookiecutter.project_slug}}",
-    ),
-}
-{%- endif %}
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -254,10 +245,6 @@ EMAIL_TIMEOUT = 5
 # ------------------------------------------------------------------------------
 # Django Admin URL.
 ADMIN_URL = "admin/"
-# https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""{{cookiecutter.author_name}}""", "{{cookiecutter.email}}")]
-# https://docs.djangoproject.com/en/dev/ref/settings/#managers
-MANAGERS = ADMINS
 # https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
 # Force the `admin` sign in process to go through the `django-allauth` workflow
 DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=False)
@@ -285,10 +272,9 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["console"]},
 }
 
-REDIS_URL = env("REDIS_URL", default="redis://{% if cookiecutter.use_docker == 'y' %}redis{%else%}localhost{% endif %}:6379/0")
+REDIS_URL = env("REDIS_URL", default="redis://redis:6379/0")
 REDIS_SSL = REDIS_URL.startswith("rediss://")
 
-{% if cookiecutter.use_celery == 'y' -%}
 # Celery
 # ------------------------------------------------------------------------------
 if USE_TZ:
@@ -330,7 +316,6 @@ CELERY_TASK_SEND_SENT_EVENT = True
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#worker-hijack-root-logger
 CELERY_WORKER_HIJACK_ROOT_LOGGER = False
 
-{%- endif %}
 # django-allauth
 # ------------------------------------------------------------------------------
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)

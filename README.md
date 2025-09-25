@@ -30,8 +30,8 @@ production-ready Django projects quickly.
 - Comes with custom user model ready to go
 - Optional basic ASGI setup for Websockets
 - Optional custom static build using Gulp or Webpack
-- Send emails via [Anymail](https://github.com/anymail/django-anymail) (using [Mailgun](http://www.mailgun.com/) by default or Amazon SES if AWS is selected cloud provider, but switchable)
-- Media storage using Amazon S3, Google Cloud Storage, Azure Storage or nginx
+- Send emails via [Anymail](https://github.com/anymail/django-anymail) (using [Mailgun](http://www.mailgun.com/) by default but switchable)
+- Media storage using Amazon/DO S3, Google Cloud Storage, Azure Storage or nginx
 - Docker support using [docker-compose](https://github.com/docker/compose) for development and production (using [Traefik](https://traefik.io/) with [LetsEncrypt](https://letsencrypt.org/) support)
 - [Procfile](https://devcenter.heroku.com/articles/procfile) for deploying to Heroku
 - Instructions for deploying to [PythonAnywhere](https://www.pythonanywhere.com/)
@@ -108,26 +108,11 @@ Answer the prompts with your own desired [options](http://cookiecutter-django.re
     author_name [Daniel Roy Greenfeld]: Daniel Greenfeld
     domain_name [example.com]: myreddit.com
     email [daniel-greenfeld@example.com]: pydanny@gmail.com
-    version [0.1.0]: 0.0.1
-    Select open_source_license:
-    1 - MIT
-    2 - BSD
-    3 - GPLv3
-    4 - Apache Software License 2.0
-    5 - Not open source
-    Choose from 1, 2, 3, 4, 5 [1]: 1
     Select username_type:
     1 - username
     2 - email
     Choose from 1, 2 [1]: 1
     timezone [UTC]: America/Los_Angeles
-    windows [n]: n
-    Select an editor to use. The choices are:
-    1 - None
-    2 - PyCharm
-    3 - VS Code
-    Choose from 1, 2, 3 [1]: 1
-    use_docker [n]: n
     Select postgresql_version:
     1 - 17
     2 - 16
@@ -135,7 +120,7 @@ Answer the prompts with your own desired [options](http://cookiecutter-django.re
     4 - 14
     Choose from 1, 2, 3, 4 [1]: 1
     Select cloud_provider:
-    1 - AWS
+    1 - AWS/DO
     2 - GCP
     3 - None
     Choose from 1, 2, 3 [1]: 1
@@ -151,26 +136,24 @@ Answer the prompts with your own desired [options](http://cookiecutter-django.re
     9 - Other SMTP
     Choose from 1, 2, 3, 4, 5, 6, 7, 8, 9 [1]: 1
     use_async [n]: n
-    use_drf [n]: y
+    use_drf [y]: y
     Select frontend_pipeline:
     1 - None
     2 - Django Compressor
     3 - Gulp
     4 - Webpack
     Choose from 1, 2, 3, 4 [1]: 1
-    use_celery [n]: y
+    use_celery [y]: y
     use_mailpit [n]: n
-    use_sentry [n]: y
     use_whitenoise [n]: n
-    use_heroku [n]: y
     Select ci_tool:
     1 - None
     2 - Travis
     3 - Gitlab
     4 - Github
-    Choose from 1, 2, 3, 4 [1]: 4
+    Choose from 1, 2, 3, 4 [4]: 4
     keep_local_envs_in_vcs [y]: y
-    debug [n]: n
+    debug [n]: y
 
 Enter the project and take a look around:
 
