@@ -1,0 +1,5 @@
+NO_TKH_ATTRIBUTE_CODE = "no_tkh"
+SAP_TKH_ATTRIBUTE_CODE = "tkh_cost"
+CAN_APPLY_DISCOUNT = "can_apply_discount"
+PRODUCT_GROUP_LOCK_ATTRIBUTE_CODE = "lock_product_group"
+ACCOUNT_TYPE_CODE = "account_type_code"

@@ -74,7 +74,7 @@ class TenantBaseCache:
         cache_key = self.get_cache_key(cache_key=cache_key) if cache_key else self.cache_key
         return self.cache.get(cache_key, default)
 
-    def set(self, cache_value: Any, cache_key: str = "", timeout: Optional[int] = None) -> bool:
+    def set(self, cache_value: Any, cache_key: str = "", timeout: Optional[int] = None) -> None:
         """
         Set a value in cache.
 
@@ -90,7 +90,7 @@ class TenantBaseCache:
         timeout = timeout if timeout is not None else self.default_timeout
         return self.cache.set(cache_key, cache_value, timeout)
 
-    def clear_cache(self) -> int:
+    def clear_cache(self) -> None:
         """
         Clear all cache entries for the current tenant.
 
@@ -107,12 +107,12 @@ class TenantBaseCache:
             tenant_keys = [key for key in all_keys if key.startswith(f"{self.tenant_code}:")]
             if tenant_keys:
                 return self.cache.delete_many(tenant_keys)
-            return 0
+            return
         except (AttributeError, NotImplementedError):
             # Fallback: can't clear tenant-specific keys
-            return 0
+            return
 
-    def remove(self, cache_key: str = "") -> bool:
+    def remove(self, cache_key: str = "") -> None:
         """
         Remove a specific cache key.
 
@@ -125,15 +125,15 @@ class TenantBaseCache:
         cache_key = self.get_cache_key(cache_key=cache_key) if cache_key else self.cache_key
         return self.cache.delete(cache_key)
 
-    def remove_many(self, cache_keys: List[str]) -> int:
+    def remove_many(self, cache_keys: List[str]) -> None:
         """
         Remove multiple cache keys.
 
         :param cache_keys: List of cache keys to remove
-        :return: Number of keys successfully deleted
+        :return:
         """
         if not cache_keys:
-            return 0
+            return
 
         tenant_keys = [self.get_cache_key(cache_key=cache_key) for cache_key in cache_keys]
         return self.cache.delete_many(tenant_keys)
