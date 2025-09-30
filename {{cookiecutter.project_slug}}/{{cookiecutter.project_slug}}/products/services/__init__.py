@@ -1,0 +1,13 @@
+from .available_credit_products import AvailableCreditProductService
+from .bases import BaseProductService
+from .price import PriceService
+from .product_relation import ProductRelationService
+from .promotion import PromotionService, ProductPromotionService
+from .available_credit_products import AvailableCreditProductService
+from .product_service import ProductService
+from .product_group import ProductGroupService
+from .product_attribute_service import ProductAttributeService
+from .product_group_attribute_service import ProductGroupAttributeService
+from .product_type import ProductTypeService
+from .promotion import ProductPromotionService, PromotionService
+from .vat import VatService

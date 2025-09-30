@@ -49,3 +49,5 @@ drf-spectacular==0.28.0  # https://github.com/tfranzel/drf-spectacular
 {%- if cookiecutter.frontend_pipeline == 'Webpack' %}
 django-webpack-loader==3.2.1  # https://github.com/django-webpack/django-webpack-loader
 {%- endif %}
+django-simple-history==3.10.1  # https://github.com/django-commons/django-simple-history
+django-axes[ipware]==8.0.0  # https://github.com/jazzband/django-axes
